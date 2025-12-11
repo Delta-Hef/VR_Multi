@@ -3,6 +3,10 @@ using UnityEngine.XR.Hands;
 using System.Collections.Generic;
 using UnityEngine.SubsystemsImplementation;
 
+
+//placer bug un peu et ya scaling et snapping
+
+
 public class BlockPlacementPinchPro : MonoBehaviour
 {
     [Header("Grid & Prefabs")]
