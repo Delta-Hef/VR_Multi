@@ -3,41 +3,29 @@ using UnityEngine.XR.Hands;
 using System.Collections.Generic;
 using UnityEngine.SubsystemsImplementation;
 
-
-//placer bug un peu et ya scaling et snapping
-
-
-public class BlockPlacementPinchPro : MonoBehaviour
+public class BlockPlacementVRPhysicsScaling : MonoBehaviour
 {
-    [Header("Grid & Prefabs")]
-    public float gridSize = 1f;
+    [Header("Prefabs")]
     public GameObject blockPrefab;
     public GameObject ghostPrefab;
 
-    [Header("Smoothing & Pinch")]
-    public float raySmoothSpeed = 20f;
-    public float ghostSmooth = 10f;
+    [Header("Pinch & Scaling")]
     public float pinchThreshold = 0.035f;
     public float pinchReleaseThreshold = 0.05f;
-    public float rayLength = 10f;
+    public float ghostFollowSpeed = 15f;
+    public float ghostOffset = 0.2f; // 20 cm in front of hand
 
     private XRHandSubsystem handSubsystem;
 
-    private Vector3 smoothedRayOrigin;
-    private Vector3 smoothedRayDir;
-
+    private GameObject ghost;
     private bool isPinching = false;
     private bool ghostValid = false;
-    private GameObject ghost;
-    private Vector3 lastSnapPos = Vector3.zero;
+    private int points;
 
     // Two-hand scaling
     private bool scalingMode = false;
     private float initialDistance;
     private Vector3 initialScale;
-
-    // Grid tracking to prevent overlap
-    private Dictionary<Vector3, GameObject> placedBlocks = new Dictionary<Vector3, GameObject>();
 
     void Start()
     {
@@ -49,12 +37,8 @@ public class BlockPlacementPinchPro : MonoBehaviour
         else
             Debug.LogError("No XRHandSubsystem found.");
 
-        // Instantiate ghost
         ghost = Instantiate(ghostPrefab);
         ghost.SetActive(false);
-
-        smoothedRayOrigin = Vector3.zero;
-        smoothedRayDir = Vector3.forward;
     }
 
     void Update()
@@ -66,36 +50,17 @@ public class BlockPlacementPinchPro : MonoBehaviour
 
         if (!right.isTracked) return;
 
-        // --- Get right hand joints
+        // --- Right hand joints
         if (!TryGetJointPose(right, XRHandJointID.IndexTip, out Pose rIndex) ||
-            !TryGetJointPose(right, XRHandJointID.ThumbTip, out Pose rThumb))
+            !TryGetJointPose(right, XRHandJointID.ThumbTip, out Pose rThumb) ||
+            !TryGetJointPose(right, XRHandJointID.Palm, out Pose rPalm))
             return;
 
-        // --- Compute stable ray (center between index & thumb)
         Vector3 pinchCenter = (rIndex.position + rThumb.position) * 0.5f;
-        Vector3 pinchDir = (rIndex.position - rThumb.position).normalized;
-
-        float smooth = 1f - Mathf.Exp(-raySmoothSpeed * Time.deltaTime);
-        smoothedRayOrigin = Vector3.Lerp(smoothedRayOrigin, pinchCenter, smooth);
-        smoothedRayDir = Vector3.Lerp(smoothedRayDir, pinchDir, smooth);
-
-        Debug.DrawRay(smoothedRayOrigin, smoothedRayDir * rayLength, Color.red);
-
-        // --- Right hand pinch detection
         float rDist = Vector3.Distance(rIndex.position, rThumb.position);
         bool rightPinching = rDist < pinchThreshold;
 
-        // Hysteresis
-        if (!isPinching && rightPinching)
-            isPinching = true;
-        else if (isPinching && rDist > pinchReleaseThreshold)
-        {
-            isPinching = false;
-            if (!scalingMode)
-                TryPlaceBlock();
-        }
-
-        // --- Left hand pinch detection
+        // --- Left hand joints for scaling
         bool leftPinching = false;
         Pose lIndex = default, lThumb = default;
 
@@ -108,7 +73,7 @@ public class BlockPlacementPinchPro : MonoBehaviour
         }
 
         // --- Two-hand scaling mode
-        if (rightPinching && leftPinching && ghostValid && !scalingMode)
+        if (rightPinching && leftPinching && !scalingMode)
         {
             scalingMode = true;
             initialDistance = Vector3.Distance(rIndex.position, lIndex.position);
@@ -123,76 +88,65 @@ public class BlockPlacementPinchPro : MonoBehaviour
             float currentDist = Vector3.Distance(rIndex.position, lIndex.position);
             float ratio = currentDist / initialDistance;
             ghost.transform.localScale = initialScale * ratio;
-            return; // skip placement while scaling
-        }
-
-        // --- Update ghost
-        UpdateGhostPreview();
-    }
-
-    // Utility: safe joint pose
-    bool TryGetJointPose(XRHand hand, XRHandJointID jointID, out Pose pose)
-    {
-        XRHandJoint joint = hand.GetJoint(jointID);
-        return joint.TryGetPose(out pose);
-    }
-
-    // Ghost preview with snapping & collision check
-    void UpdateGhostPreview()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(smoothedRayOrigin, smoothedRayDir, out hit, rayLength))
-        {
-            Vector3 snapped = Snap(hit.point + hit.normal * (gridSize * 0.5f));
-
-            // Prevent overlapping: check existing blocks
-            if (placedBlocks.ContainsKey(snapped))
-            {
-                snapped += Vector3.up * gridSize;
-                if (placedBlocks.ContainsKey(snapped))
-                {
-                    ghostValid = false;
-                    ghost.SetActive(false);
-                    return;
-                }
-            }
-
-            // Smooth ghost movement
-            ghost.transform.position = Vector3.Lerp(ghost.transform.position, snapped, Time.deltaTime * ghostSmooth);
-            ghost.transform.rotation = Quaternion.identity;
-            ghost.SetActive(true);
             ghostValid = true;
-            lastSnapPos = snapped;
         }
-        else
+
+        // --- Update ghost preview
+        UpdateGhost(pinchCenter, rPalm);
+
+        // --- Pinch release to place block
+        if (!isPinching && rightPinching)
+            isPinching = true;
+        else if (isPinching && rDist > pinchReleaseThreshold)
         {
-            ghost.SetActive(false);
-            ghostValid = false;
+            isPinching = false;
+            if (ghostValid && !scalingMode)
+                TryPlaceBlock();
         }
     }
 
-    // Place block at ghost
+    void UpdateGhost(Vector3 targetPos, Pose handPose)
+    {
+        if (ghost == null) return;
+
+        ghost.SetActive(true);
+
+        // Offset in front of hand
+        Vector3 offsetPos = targetPos + handPose.rotation * Vector3.forward * ghostOffset;
+
+        // Smooth follow
+        ghost.transform.position = Vector3.Lerp(ghost.transform.position, offsetPos, Time.deltaTime * ghostFollowSpeed);
+        ghost.transform.rotation = Quaternion.Slerp(ghost.transform.rotation, handPose.rotation, Time.deltaTime * ghostFollowSpeed);
+
+        ghostValid = true;
+    }
+
     void TryPlaceBlock()
     {
         if (!ghostValid) return;
 
-        Vector3 pos = ghost.transform.position;
+        GameObject newBlock = Instantiate(blockPrefab, ghost.transform.position, ghost.transform.rotation);
 
-        if (placedBlocks.ContainsKey(pos)) return; // safeguard
+        ScoreDisplayVR display = FindObjectOfType<ScoreDisplayVR>();
+        if (display != null)
+        {
+            display.AddScore(10);
+        }
+        // Add Rigidbody if missing
+        if (newBlock.GetComponent<Rigidbody>() == null)
+            newBlock.AddComponent<Rigidbody>();
 
-        GameObject newBlock = Instantiate(blockPrefab, pos, ghost.transform.rotation);
+        // Ensure collider exists
+        if (newBlock.GetComponent<Collider>() == null)
+            newBlock.AddComponent<BoxCollider>();
+
+        // Apply ghost scale
         newBlock.transform.localScale = ghost.transform.localScale;
-
-        placedBlocks[pos] = newBlock;
     }
 
-    // Snap to grid
-    Vector3 Snap(Vector3 pos)
+    bool TryGetJointPose(XRHand hand, XRHandJointID jointID, out Pose pose)
     {
-        return new Vector3(
-            Mathf.Round(pos.x / gridSize) * gridSize,
-            Mathf.Round(pos.y / gridSize) * gridSize,
-            Mathf.Round(pos.z / gridSize) * gridSize
-        );
+        XRHandJoint joint = hand.GetJoint(jointID);
+        return joint.TryGetPose(out pose);
     }
 }
