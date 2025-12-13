@@ -479,7 +479,7 @@ inline void Dictionary_2__ctor_m1957F69211A716A401A4831578C95DF4D69F8683 (Dictio
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138545
+// Method Definition Index: 139898
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR MonoScriptData_tC4DCEC71F882F0A8F284E7B9DAF273B39233419A UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mB04F1BF164657C2C4CFB696FB162E59620C4AD96 (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -513,7 +513,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR MonoScriptData_tC4DCEC71F882F0A8F284E7B9DAF27
 		return L_6;
 	}
 }
-// Method Definition Index: 138546
+// Method Definition Index: 139899
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_m3CA17956292AE244C67CC75E4F04B2685AFA6AF6 (UnitySourceGeneratedAssemblyMonoScriptTypes_v1_t2C1698A8DF38BDF9BC0EC90614BDA0341B644528* __this, const RuntimeMethod* method) 
 {
 	{
@@ -607,7 +607,7 @@ IL2CPP_EXTERN_C void MonoScriptData_tC4DCEC71F882F0A8F284E7B9DAF273B39233419A_ma
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138549
+// Method Definition Index: 139902
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* SceneObjectGuid_get_Id_m983979D51117AA15F637BEFF4845975368A9D464 (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* __this, const RuntimeMethod* method) 
 {
 	{
@@ -616,7 +616,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* SceneObjectGuid_get_Id_m983979D5111
 		return L_0;
 	}
 }
-// Method Definition Index: 138550
+// Method Definition Index: 139903
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuid_Awake_mF27E8C274B060EECC5081321A7DAC1593E68F0F5 (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -709,7 +709,7 @@ IL_0066:
 		return;
 	}
 }
-// Method Definition Index: 138551
+// Method Definition Index: 139904
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuid_Register_m20CC05211829574E918251BD38C7B9B2974A41EA (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -755,7 +755,7 @@ IL_0010:
 		return;
 	}
 }
-// Method Definition Index: 138552
+// Method Definition Index: 139905
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuid_OnValidate_m6EFEDF1C002F049B071BC3A830139230D5CB159C (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* __this, const RuntimeMethod* method) 
 {
 	{
@@ -765,7 +765,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuid_OnValidate_m6EFEDF1C002F
 		return;
 	}
 }
-// Method Definition Index: 138553
+// Method Definition Index: 139906
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuid_OnDestroy_m8166B4D4ADCBA9F01A58F70AB2296C2227596986 (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* __this, const RuntimeMethod* method) 
 {
 	SceneObjectGuidManager_tBC6AC9B7C2E568611DBAE24D780EF5A6E4F79CD6* G_B2_0 = NULL;
@@ -795,7 +795,7 @@ IL_000a:
 		return;
 	}
 }
-// Method Definition Index: 138554
+// Method Definition Index: 139907
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuid__ctor_m8ED62567D84C619A1D0D644A6D14CEE10AD4048E (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* __this, const RuntimeMethod* method) 
 {
 	{
@@ -803,7 +803,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuid__ctor_m8ED62567D84C619A1
 		return;
 	}
 }
-// Method Definition Index: 138555
+// Method Definition Index: 139908
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool SceneObjectGuid_U3CAwakeU3Eb__4_0_mDB461D0D907FF7F91B07AD6D66DA6FF8C0273794 (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* __this, SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* ___0_c, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -846,7 +846,7 @@ IL_001b:
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138556
+// Method Definition Index: 139909
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR SceneObjectGuidManager_tBC6AC9B7C2E568611DBAE24D780EF5A6E4F79CD6* SceneObjectGuidManager_get_Instance_m01F3B2F98C1E295649E08A4BFA744A03AF9A44B6 (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -878,7 +878,7 @@ IL_0011:
 		return L_2;
 	}
 }
-// Method Definition Index: 138557
+// Method Definition Index: 139910
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuidManager_set_Instance_m61273E4ED6A57C367CAC94AA5E9ED853E88FD578 (SceneObjectGuidManager_tBC6AC9B7C2E568611DBAE24D780EF5A6E4F79CD6* ___0_value, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -896,7 +896,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuidManager_set_Instance_m612
 		return;
 	}
 }
-// Method Definition Index: 138558
+// Method Definition Index: 139911
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuidManager_Register_mDD7CC5A81BB3C9BD33105A3DD7617A5151031AC8 (SceneObjectGuidManager_tBC6AC9B7C2E568611DBAE24D780EF5A6E4F79CD6* __this, SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* ___0_component, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -919,7 +919,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuidManager_Register_mDD7CC5A
 		return;
 	}
 }
-// Method Definition Index: 138559
+// Method Definition Index: 139912
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool SceneObjectGuidManager_Contains_m286B9C5085707CA3F2C6B5BF8457B05A372D2D7B (SceneObjectGuidManager_tBC6AC9B7C2E568611DBAE24D780EF5A6E4F79CD6* __this, String_t* ___0_id, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -938,7 +938,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool SceneObjectGuidManager_Contains_m286B9C5
 		return L_2;
 	}
 }
-// Method Definition Index: 138560
+// Method Definition Index: 139913
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool SceneObjectGuidManager_Unregister_m213FE7F478C8DA046F22173A19216E4CFD3A7510 (SceneObjectGuidManager_tBC6AC9B7C2E568611DBAE24D780EF5A6E4F79CD6* __this, SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* ___0_component, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -960,7 +960,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool SceneObjectGuidManager_Unregister_m213FE
 		return L_3;
 	}
 }
-// Method Definition Index: 138561
+// Method Definition Index: 139914
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* SceneObjectGuidManager_GetComponent_m0602089F333A64EE0E33586EBA6FBC6E611793B7 (SceneObjectGuidManager_tBC6AC9B7C2E568611DBAE24D780EF5A6E4F79CD6* __this, String_t* ___0_id, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -994,7 +994,7 @@ IL_0012:
 		return (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935*)NULL;
 	}
 }
-// Method Definition Index: 138562
+// Method Definition Index: 139915
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuidManager__ctor_m3D0C439BE44E1FF73D7DC360E7C7326DB49E922B (SceneObjectGuidManager_tBC6AC9B7C2E568611DBAE24D780EF5A6E4F79CD6* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -1041,7 +1041,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SceneObjectGuidManager__ctor_m3D0C439BE4
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-// Method Definition Index: 138549
+// Method Definition Index: 139902
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR String_t* SceneObjectGuid_get_Id_m983979D51117AA15F637BEFF4845975368A9D464_inline (SceneObjectGuid_t951911B945E3C41833588F141DBFD9CFC9BEE935* __this, const RuntimeMethod* method) 
 {
 	{

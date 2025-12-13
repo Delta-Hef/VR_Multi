@@ -239,7 +239,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NullNetworkObjectProvider__ctor_mF315AE0
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138627
+// Method Definition Index: 139980
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR MonoScriptData_t04D96D941670420EBBB28F3510F348A258742E71 UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mA8BC3BE83F177313017657A57F37696C21561BA6 (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -273,7 +273,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR MonoScriptData_t04D96D941670420EBBB28F3510F34
 		return L_6;
 	}
 }
-// Method Definition Index: 138628
+// Method Definition Index: 139981
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_m950DF982966197624BB2564B5003B1241E98A042 (UnitySourceGeneratedAssemblyMonoScriptTypes_v1_tF6F299F7B08D16744C5C0FD49AA7100470F9AA57* __this, const RuntimeMethod* method) 
 {
 	{
@@ -421,7 +421,7 @@ IL2CPP_EXTERN_C void NetworkSolutionInterfaceParameters_t0BE8E0168DED742768E4623
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138630
+// Method Definition Index: 139983
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NetworkSolutionInterface_SetInterface_m6951E0453FA56CD6F66C3A009BB0499DFE06BD37 (NetworkSolutionInterfaceParameters_t0BE8E0168DED742768E4623AD3E9A35EB0D5F93D ___0_parameters, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -461,7 +461,7 @@ IL_0013:
 		return;
 	}
 }
-// Method Definition Index: 138631
+// Method Definition Index: 139984
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* NetworkSolutionInterface_get_NetworkObjectProvider_m496222ED2FAAE98DCE8047ECDCDC8877D0612E2F (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -484,7 +484,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* NetworkSolutionInterface_get_N
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138632
+// Method Definition Index: 139985
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C* NullNetworkObjectProvider_Unity_Multiplayer_Tools_INetworkObjectProvider_GetNetworkObject_m6191B3B1BFACD2224CBCDB6A9FF6FF8EDDAA660E (NullNetworkObjectProvider_tD3ADC7FA65978DAB3252EB32A12927B6743DC797* __this, uint64_t ___0_networkObjectId, const RuntimeMethod* method) 
 {
 	{
@@ -492,7 +492,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D971
 		return (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL;
 	}
 }
-// Method Definition Index: 138633
+// Method Definition Index: 139986
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NullNetworkObjectProvider__ctor_mF315AE0B009BB80E13E6860F1E4D1E9B2C0C52F2 (NullNetworkObjectProvider_tD3ADC7FA65978DAB3252EB32A12927B6743DC797* __this, const RuntimeMethod* method) 
 {
 	{

@@ -25,13 +25,13 @@ static Il2CppMethodPointer s_methodPointers[7] =
 };
 static const int32_t s_InvokerIndices[7] = 
 {
-	33874,
-	20316,
+	35079,
+	21128,
 	-1,
-	32396,
-	33706,
-	13276,
-	20316,
+	33571,
+	34905,
+	13796,
+	21128,
 };
 IL2CPP_EXTERN_C const Il2CppCodeGenModule g_Unity_Multiplayer_Tools_NetworkSolutionInterface_CodeGenModule;
 const Il2CppCodeGenModule g_Unity_Multiplayer_Tools_NetworkSolutionInterface_CodeGenModule = 

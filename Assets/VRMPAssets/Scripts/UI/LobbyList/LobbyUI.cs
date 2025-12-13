@@ -43,6 +43,9 @@ namespace XRMultiplayer
         [SerializeField]
         Button m_RefreshButton;
 
+        [SerializeField] private XRINetworkGameManager networkGameManager;
+
+
         [SerializeField]
         Image m_CooldownImage;
 
@@ -156,13 +159,27 @@ namespace XRMultiplayer
         /// </summary>
         /// <param name="roomCode">The room code to join</param>
         /// <remarks> This function is called from <see cref="XRIKeyboardDisplay"/>
-        public void EnterRoomCode(string roomCode)
+        private bool isJoining = false;
+
+        public void EnterRoomCode(string code)
         {
-            ToggleConnectionSubPanel(ConnectionSubPanel.ConnectionPanel);
-            XRINetworkGameManager.Connected.Subscribe(OnConnected);
-            XRINetworkGameManager.Instance.JoinLobbyByCode(roomCode.ToUpper());
-            m_ConnectionSuccessText.text = $"Joining Room: {roomCode.ToUpper()}";
+            if (isJoining) return;
+            if (string.IsNullOrWhiteSpace(code)) return;
+
+            isJoining = true;
+
+            networkGameManager.JoinLobbyByCode(code);
+
+            // Lance la coroutine pour réactiver le Join après 1 seconde
+            StartCoroutine(ResetJoinFlag());
         }
+
+        private IEnumerator ResetJoinFlag()
+        {
+            yield return new WaitForSeconds(1f); // attend 1 seconde
+            isJoining = false;
+        }
+
 
         public void JoinLobby(ISessionInfo Session)
         {

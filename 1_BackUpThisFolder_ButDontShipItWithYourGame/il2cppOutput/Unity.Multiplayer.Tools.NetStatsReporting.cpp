@@ -199,7 +199,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MetricObserver__ctor_mD010C3261BC937F926
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138704
+// Method Definition Index: 140057
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR MonoScriptData_t0F92E21330D469737835DC2B79DE8707FD4779CB UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_m110916D99BA4E94796F5086B45F5B0CEEB8FB2DB (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -233,7 +233,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR MonoScriptData_t0F92E21330D469737835DC2B79DE8
 		return L_6;
 	}
 }
-// Method Definition Index: 138705
+// Method Definition Index: 140058
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_m3BE4CEDBB47744124448B0AE27F3A4B04FFA5A3F (UnitySourceGeneratedAssemblyMonoScriptTypes_v1_t972EAD83E1856237E249CE3BCC6B1E8B8B56AFC5* __this, const RuntimeMethod* method) 
 {
 	{
@@ -319,7 +319,7 @@ IL2CPP_EXTERN_C void MonoScriptData_t0F92E21330D469737835DC2B79DE8707FD4779CB_ma
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138706
+// Method Definition Index: 140059
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* MetricObserverFactory_Construct_m010B1B7D0A896B713F7D4721CD5E8C52BD66500C (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;

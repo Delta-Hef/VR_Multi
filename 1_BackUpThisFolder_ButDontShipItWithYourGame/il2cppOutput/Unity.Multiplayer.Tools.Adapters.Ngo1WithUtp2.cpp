@@ -1124,7 +1124,7 @@ inline void Dictionary_2__ctor_m589C94E97696C099BE38138F8958B53D37E0187F (Dictio
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138611
+// Method Definition Index: 139964
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR MonoScriptData_tFB81524A513E4C8C4DA93392DDAF1FB5F235B53D UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_m8F90A7D0B8F6AB264D44C786618260E4BCB87E8F (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -1158,7 +1158,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR MonoScriptData_tFB81524A513E4C8C4DA93392DDAF1
 		return L_6;
 	}
 }
-// Method Definition Index: 138612
+// Method Definition Index: 139965
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_m7560F2CD1193DF4360C694C3FF33F181890DF8F0 (UnitySourceGeneratedAssemblyMonoScriptTypes_v1_t1794764021050D517532CA73793D0077CAE69FE4* __this, const RuntimeMethod* method) 
 {
 	{
@@ -1244,7 +1244,7 @@ IL2CPP_EXTERN_C void MonoScriptData_tFB81524A513E4C8C4DA93392DDAF1FB5F235B53D_ma
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138613
+// Method Definition Index: 139966
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Ngo1WithUtp2AdapterInitializer_InitializeAdapter_m4B60A4320F9BC257F98480406B58D8B167184EF6 (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -1288,7 +1288,7 @@ IL_002f:
 		return;
 	}
 }
-// Method Definition Index: 138614
+// Method Definition Index: 139967
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Ngo1WithUtp2AdapterInitializer_AddAdapter_m849F2BBC8F9F51DCD4F024740DC481F0D6D21451 (int32_t ___0_instanceId, NetworkDriver_t3E4A5DD4686388B9F25135C01E4DB57E79449036 ___1_networkDriver, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -1341,7 +1341,7 @@ IL_000e:
 		return;
 	}
 }
-// Method Definition Index: 138615
+// Method Definition Index: 139968
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Ngo1WithUtp2AdapterInitializer_RemoveAdapter_m6FFBD3CFAB90BC16AED1C77EEB79EB13998C5A99 (int32_t ___0_instanceId, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -1386,7 +1386,7 @@ IL_0021:
 		return;
 	}
 }
-// Method Definition Index: 138616
+// Method Definition Index: 139969
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Ngo1WithUtp2AdapterInitializer__cctor_m6A17980B8B43AB8D97292B2A0425BCD956EE3C56 (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -1438,7 +1438,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Ngo1WithUtp2AdapterInitializer__cctor_m6
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 138617
+// Method Definition Index: 139970
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NetworkVariableSerializationHelper_InitializeSerialization_mE85497859622E01EF6B7CD79D1E18ABBEE218864 (const RuntimeMethod* method) 
 {
 	{
