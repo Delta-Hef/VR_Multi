@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 2722608077457501448}
   - component: {fileID: -596440522655535522}
   - component: {fileID: 4168485632048156895}
+  - component: {fileID: -4396266594815436755}
   m_Layer: 0
   m_Name: XRI_Network_Player_Avatar
   m_TagString: Untagged
@@ -544,7 +545,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5358844088564582620}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12fb481985919774fbe275ac0e6fafa0, type: 3}
   m_Name: 
@@ -576,6 +577,25 @@ MonoBehaviour:
   ghostOffset: 0.2
   spawnTestKey: 98
   keyboardSpawnDistance: 1.2
+--- !u!114 &-4396266594815436755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5358844088564582620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e4a245045745614f85b74bd40bb0360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block_Logic
+  ShowTopMostFoldoutHeaderGroup: 1
+  blockPrefab: {fileID: 4830039934587709807, guid: 7013051eb28cc4348a7d180c7316f952,
+    type: 3}
+  ghostPrefab: {fileID: 4830039934587709807, guid: 075cca90834dd794b970f76fdd2f7609,
+    type: 3}
+  pinchThreshold: 0.035
+  ghostOffset: 0.2
 --- !u!1 &5908336471056132768
 GameObject:
   m_ObjectHideFlags: 0

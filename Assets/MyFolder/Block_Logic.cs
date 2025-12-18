@@ -7,7 +7,7 @@ public class Block_Logic : NetworkBehaviour
 {
     public GameObject blockPrefab;
     public GameObject ghostPrefab;
-    public float pinchThreshold = 0.035f;
+    public float pinchThreshold = 0.045f; // Augmenté un peu pour plus de stabilité
     public float ghostOffset = 0.2f;
 
     private XRHandSubsystem handSubsystem;
@@ -16,7 +16,7 @@ public class Block_Logic : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) return; // Uniquement pour le joueur local
+        if (!IsOwner) return;
 
         var list = new List<XRHandSubsystem>();
         SubsystemManager.GetSubsystems(list);
@@ -31,7 +31,7 @@ public class Block_Logic : NetworkBehaviour
         if (!IsOwner || handSubsystem == null) return;
 
         XRHand right = handSubsystem.rightHand;
-        if (!right.isTracked) return;
+        if (!right.isTracked) { ghost?.SetActive(false); return; }
 
         if (right.GetJoint(XRHandJointID.IndexTip).TryGetPose(out Pose rIndex) &&
             right.GetJoint(XRHandJointID.ThumbTip).TryGetPose(out Pose rThumb) &&
@@ -40,7 +40,6 @@ public class Block_Logic : NetworkBehaviour
             float dist = Vector3.Distance(rIndex.position, rThumb.position);
             bool pinching = dist < pinchThreshold;
 
-            // Mise à jour du Ghost (visuel local)
             UpdateGhost(rIndex.position, rPalm);
 
             if (!isPinching && pinching) isPinching = true;
@@ -54,6 +53,7 @@ public class Block_Logic : NetworkBehaviour
 
     void UpdateGhost(Vector3 pos, Pose palm)
     {
+        if (ghost == null) return;
         ghost.SetActive(true);
         ghost.transform.position = pos + palm.rotation * Vector3.forward * ghostOffset;
         ghost.transform.rotation = palm.rotation;
@@ -61,17 +61,24 @@ public class Block_Logic : NetworkBehaviour
 
     void PlaceNetworkedBlock()
     {
-        // Création et synchronisation immédiate
+        // 1. Création locale
         GameObject block = Instantiate(blockPrefab, ghost.transform.position, ghost.transform.rotation);
         block.transform.localScale = ghost.transform.localScale;
 
+        // 2. FORCE l'activation immédiate pour éviter l'erreur NetworkBehaviourId
+        block.SetActive(true);
+
         if (block.TryGetComponent(out NetworkObject netObj))
         {
-            netObj.Spawn(); // Synchronise avec ton amie
+            // 3. Spawn Distributed (Autorité au joueur qui place)
+            netObj.Spawn();
 
-            // Ajouter 10 points
-            if (TryGetComponent(out ScoreDisplayVR scoreScript))
+            // 4. Score (On cherche le script sur le même objet Joueur)
+            ScoreDisplayVR scoreScript = GetComponent<ScoreDisplayVR>();
+            if (scoreScript != null)
+            {
                 scoreScript.AddScore(10);
+            }
         }
     }
 }
