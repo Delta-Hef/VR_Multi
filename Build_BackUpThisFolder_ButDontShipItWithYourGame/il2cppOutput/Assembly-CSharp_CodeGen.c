@@ -1,0 +1,84 @@
+﻿#include "pch-c.h"
+
+
+#include "codegen/il2cpp-codegen-metadata.h"
+
+
+
+
+
+extern void BlockPlacementVRPhysicsScaling_Start_m6E445A289926752318E9DECC178B45ED53A62EC9 (void);
+extern void BlockPlacementVRPhysicsScaling_Update_m236032C2EDDC7509DF63EDE95A99618A3D2833A3 (void);
+extern void BlockPlacementVRPhysicsScaling_UpdateGhost_m3DF9A717546BDC44308BBFEDF141E695F935AF16 (void);
+extern void BlockPlacementVRPhysicsScaling_TryPlaceBlock_m88218EF819617BC0AACC2C0CC81258D4AF15E428 (void);
+extern void BlockPlacementVRPhysicsScaling_TryGetJointPose_m6B2CA869AD3853EDE82DA551993D45E01CAD92D8 (void);
+extern void BlockPlacementVRPhysicsScaling__ctor_m34913DF3A7AAC4D5D440F5147155D815CB0898D8 (void);
+extern void NewMonoBehaviourScript_Start_m3AEB44E196F409294FDF6484B549ABB295AD0AFC (void);
+extern void NewMonoBehaviourScript_Update_mA54E945ACEFE3BC597B6BD6C8AC9882B124A0563 (void);
+extern void NewMonoBehaviourScript__ctor_mC52B54CFF4703513FE2F0CFA60A5A6AD27ED5635 (void);
+extern void ScoreDisplayVR_Start_mC19253CEF7444272EDBC7D23B94CD268BA2EE671 (void);
+extern void ScoreDisplayVR_AddScore_m6BDC184CE94B3EC3D990D85CFC9069133EC0FF12 (void);
+extern void ScoreDisplayVR_RemoveScore_m0F9F1CC19931B3D9F80922CC45BEF6327FD7ABB6 (void);
+extern void ScoreDisplayVR_UpdateScoreText_m7FF401622E516BDD01A52C70C9C2E328734630C0 (void);
+extern void ScoreDisplayVR__ctor_m9F0F141DF564E39147510BADC7C41F080EC2B3E5 (void);
+extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033 (void);
+extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1 (void);
+static Il2CppMethodPointer s_methodPointers[16] = 
+{
+	BlockPlacementVRPhysicsScaling_Start_m6E445A289926752318E9DECC178B45ED53A62EC9,
+	BlockPlacementVRPhysicsScaling_Update_m236032C2EDDC7509DF63EDE95A99618A3D2833A3,
+	BlockPlacementVRPhysicsScaling_UpdateGhost_m3DF9A717546BDC44308BBFEDF141E695F935AF16,
+	BlockPlacementVRPhysicsScaling_TryPlaceBlock_m88218EF819617BC0AACC2C0CC81258D4AF15E428,
+	BlockPlacementVRPhysicsScaling_TryGetJointPose_m6B2CA869AD3853EDE82DA551993D45E01CAD92D8,
+	BlockPlacementVRPhysicsScaling__ctor_m34913DF3A7AAC4D5D440F5147155D815CB0898D8,
+	NewMonoBehaviourScript_Start_m3AEB44E196F409294FDF6484B549ABB295AD0AFC,
+	NewMonoBehaviourScript_Update_mA54E945ACEFE3BC597B6BD6C8AC9882B124A0563,
+	NewMonoBehaviourScript__ctor_mC52B54CFF4703513FE2F0CFA60A5A6AD27ED5635,
+	ScoreDisplayVR_Start_mC19253CEF7444272EDBC7D23B94CD268BA2EE671,
+	ScoreDisplayVR_AddScore_m6BDC184CE94B3EC3D990D85CFC9069133EC0FF12,
+	ScoreDisplayVR_RemoveScore_m0F9F1CC19931B3D9F80922CC45BEF6327FD7ABB6,
+	ScoreDisplayVR_UpdateScoreText_m7FF401622E516BDD01A52C70C9C2E328734630C0,
+	ScoreDisplayVR__ctor_m9F0F141DF564E39147510BADC7C41F080EC2B3E5,
+	UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033,
+	UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1,
+};
+static const int32_t s_InvokerIndices[16] = 
+{
+	21128,
+	21128,
+	8477,
+	21128,
+	2988,
+	21128,
+	21128,
+	21128,
+	21128,
+	21128,
+	15903,
+	15903,
+	21128,
+	21128,
+	35061,
+	21128,
+};
+IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
+const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
+{
+	"Assembly-CSharp.dll",
+	16,
+	s_methodPointers,
+	0,
+	NULL,
+	s_InvokerIndices,
+	0,
+	NULL,
+	0,
+	NULL,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};

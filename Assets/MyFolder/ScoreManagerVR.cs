@@ -1,59 +1,54 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class ScoreDisplayVR : MonoBehaviour
+public class ScoreDisplayVR : NetworkBehaviour
 {
-    public int score = 0;
+    // NetworkVariable synchronisée automatiquement (Propriétaire peut écrire, tout le monde peut lire)
+    public NetworkVariable<int> score = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     public GameObject playerCamera;
-    private GameObject scoreTextObj;
     private TextMesh scoreText;
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        if (playerCamera == null)
+        // Initialisation du texte
+        GameObject scoreTextObj = new GameObject("ScoreText_" + OwnerClientId);
+
+        // Si c'est notre propre score, on l'attache à notre caméra
+        if (IsOwner)
         {
-            Camera cam = FindAnyObjectByType<Camera>();
-            if (cam == null)
-            {
-                Debug.LogError("Aucune caméra VR détectée.");
-                return;
-            }
-            playerCamera = cam.gameObject;
+            if (playerCamera == null) playerCamera = Camera.main.gameObject;
+            scoreTextObj.transform.SetParent(playerCamera.transform);
+            scoreTextObj.transform.localPosition = new Vector3(0f, 0.2f, 1.5f);
+        }
+        else
+        {
+            // Si c'est le score de l'autre, on l'attache au-dessus de son avatar
+            scoreTextObj.transform.SetParent(transform);
+            scoreTextObj.transform.localPosition = new Vector3(0f, 2.0f, 0f);
         }
 
-        scoreTextObj = new GameObject("ScoreText");
-        scoreTextObj.transform.SetParent(playerCamera.transform);
-
-        // recule de toi, plus haut, et plus petit
-        scoreTextObj.transform.localPosition = new Vector3(0f, 0.2f, 1.5f);
         scoreTextObj.transform.localRotation = Quaternion.identity;
-
-        // SCALE VR QUI FAIT TOUTE LA DIFFÉRENCE
         scoreTextObj.transform.localScale = Vector3.one * 0.003f;
 
         scoreText = scoreTextObj.AddComponent<TextMesh>();
         scoreText.fontSize = 100;
-        scoreText.color = Color.yellow;
+        scoreText.color = IsOwner ? Color.yellow : Color.white;
         scoreText.anchor = TextAnchor.MiddleCenter;
-        scoreText.alignment = TextAlignment.Center;
 
-        UpdateScoreText();
+        // S'abonner aux changements de valeur pour mettre à jour l'affichage
+        score.OnValueChanged += (oldVal, newVal) => { UpdateScoreText(newVal); };
+        UpdateScoreText(score.Value);
     }
 
     public void AddScore(int points)
     {
-        score += points;
-        UpdateScoreText();
+        if (IsOwner) score.Value += points;
     }
 
-    public void RemoveScore(int points)
+    void UpdateScoreText(int currentScore)
     {
-        score -= points;
-        if (score < 0) score = 0;
-        UpdateScoreText();
-    }
-
-    void UpdateScoreText()
-    {
-        scoreText.text = "Score : " + score;
+        if (scoreText != null)
+            scoreText.text = (IsOwner ? "Moi: " : "Ami: ") + currentScore;
     }
 }

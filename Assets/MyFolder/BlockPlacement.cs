@@ -2,151 +2,208 @@ using UnityEngine;
 using UnityEngine.XR.Hands;
 using System.Collections.Generic;
 using UnityEngine.SubsystemsImplementation;
+using Unity.Netcode;
 
-public class BlockPlacementVRPhysicsScaling : MonoBehaviour
+public class BlockPlacementVRPhysicsScaling : NetworkBehaviour
 {
     [Header("Prefabs")]
     public GameObject blockPrefab;
     public GameObject ghostPrefab;
 
     [Header("Pinch & Scaling")]
-    public float pinchThreshold = 0.035f;
-    public float pinchReleaseThreshold = 0.05f;
+    public float pinchThreshold = 0.045f;
+    public float pinchReleaseThreshold = 0.06f;
     public float ghostFollowSpeed = 15f;
-    public float ghostOffset = 0.2f; // 20 cm in front of hand
+    public float ghostOffset = 0.2f;
+
+    [Header("Keyboard Test")]
+    public KeyCode spawnTestKey = KeyCode.F;
+    public float keyboardSpawnDistance = 1.2f;
 
     private XRHandSubsystem handSubsystem;
-
     private GameObject ghost;
-    private bool isPinching = false;
-    private bool ghostValid = false;
-    private int points;
 
-    // Two-hand scaling
-    private bool scalingMode = false;
+    private bool isPinching;
+    private bool ghostValid;
+
+    private bool scalingMode;
     private float initialDistance;
     private Vector3 initialScale;
 
-    void Start()
-    {
-        // Load XR Hand Subsystem
-        var list = new List<XRHandSubsystem>();
-        SubsystemManager.GetSubsystems(list);
-        if (list.Count > 0)
-            handSubsystem = list[0];
-        else
-            Debug.LogError("No XRHandSubsystem found.");
+    private Camera playerCamera;
 
+    // =========================
+    // NETCODE LIFECYCLE
+    // =========================
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner) return;
+
+        // XR Hands subsystem
+        var subsystems = new List<XRHandSubsystem>();
+        SubsystemManager.GetSubsystems(subsystems);
+        if (subsystems.Count > 0)
+            handSubsystem = subsystems[0];
+
+        // Ghost (LOCAL ONLY)
         ghost = Instantiate(ghostPrefab);
         ghost.SetActive(false);
+
+        playerCamera = Camera.main;
     }
 
+    // =========================
+    // UPDATE
+    // =========================
     void Update()
     {
-        if (handSubsystem == null) return;
+        if (!IsOwner)
+            return;
+
+        // -------- Keyboard test (VERY IMPORTANT)
+        if (Input.GetKeyDown(spawnTestKey))
+        {
+            SpawnFromKeyboard();
+        }
+
+        // -------- XR Hands logic
+        if (handSubsystem == null)
+            return;
 
         XRHand right = handSubsystem.rightHand;
         XRHand left = handSubsystem.leftHand;
 
-        if (!right.isTracked) return;
-
-        // --- Right hand joints
-        if (!TryGetJointPose(right, XRHandJointID.IndexTip, out Pose rIndex) ||
-            !TryGetJointPose(right, XRHandJointID.ThumbTip, out Pose rThumb) ||
-            !TryGetJointPose(right, XRHandJointID.Palm, out Pose rPalm))
+        if (!right.isTracked)
             return;
+
+        if (!TryGetJointPose(right, XRHandJointID.IndexTip, out Pose rIndex) ||
+            !TryGetJointPose(right, XRHandJointID.ThumbTip, out Pose rThumb))
+            return;
+
+        TryGetJointPose(right, XRHandJointID.Palm, out Pose rPalm);
 
         Vector3 pinchCenter = (rIndex.position + rThumb.position) * 0.5f;
         float rDist = Vector3.Distance(rIndex.position, rThumb.position);
         bool rightPinching = rDist < pinchThreshold;
 
-        // --- Left hand joints for scaling
+        // -------- Scaling with left hand
         bool leftPinching = false;
-        Pose lIndex = default, lThumb = default;
-
         if (left.isTracked &&
-            TryGetJointPose(left, XRHandJointID.IndexTip, out lIndex) &&
-            TryGetJointPose(left, XRHandJointID.ThumbTip, out lThumb))
+            TryGetJointPose(left, XRHandJointID.IndexTip, out Pose lIndex) &&
+            TryGetJointPose(left, XRHandJointID.ThumbTip, out Pose lThumb))
         {
-            float lDist = Vector3.Distance(lIndex.position, lThumb.position);
-            leftPinching = lDist < pinchThreshold;
-        }
+            leftPinching = Vector3.Distance(lIndex.position, lThumb.position) < pinchThreshold;
 
-        // --- Two-hand scaling mode
-        if (rightPinching && leftPinching && !scalingMode)
-        {
-            scalingMode = true;
-            initialDistance = Vector3.Distance(rIndex.position, lIndex.position);
-            initialScale = ghost.transform.localScale;
+            if (rightPinching && leftPinching && !scalingMode)
+            {
+                scalingMode = true;
+                initialDistance = Vector3.Distance(rIndex.position, lIndex.position);
+                initialScale = ghost.transform.localScale;
+            }
+
+            if (scalingMode && rightPinching && leftPinching)
+            {
+                float currentDist = Vector3.Distance(rIndex.position, lIndex.position);
+                ghost.transform.localScale = initialScale * (currentDist / initialDistance);
+            }
         }
 
         if (!rightPinching || !leftPinching)
             scalingMode = false;
 
-        if (scalingMode)
-        {
-            float currentDist = Vector3.Distance(rIndex.position, lIndex.position);
-            float ratio = currentDist / initialDistance;
-            ghost.transform.localScale = initialScale * ratio;
-            ghostValid = true;
-        }
-
-        // --- Update ghost preview
         UpdateGhost(pinchCenter, rPalm);
 
-        // --- Pinch release to place block
+        // -------- Placement
         if (!isPinching && rightPinching)
             isPinching = true;
         else if (isPinching && rDist > pinchReleaseThreshold)
         {
             isPinching = false;
             if (ghostValid && !scalingMode)
-                TryPlaceBlock();
+                RequestPlaceBlock();
         }
     }
 
-    void UpdateGhost(Vector3 targetPos, Pose handPose)
+    // =========================
+    // GHOST
+    // =========================
+    void UpdateGhost(Vector3 targetPos, Pose palmPose)
     {
-        if (ghost == null) return;
+        if (ghost == null)
+            return;
 
         ghost.SetActive(true);
 
-        // Offset in front of hand
-        Vector3 offsetPos = targetPos + handPose.rotation * Vector3.forward * ghostOffset;
+        Quaternion rot = palmPose.rotation == Quaternion.identity
+            ? Quaternion.LookRotation(Camera.main.transform.forward)
+            : palmPose.rotation;
 
-        // Smooth follow
-        ghost.transform.position = Vector3.Lerp(ghost.transform.position, offsetPos, Time.deltaTime * ghostFollowSpeed);
-        ghost.transform.rotation = Quaternion.Slerp(ghost.transform.rotation, handPose.rotation, Time.deltaTime * ghostFollowSpeed);
+        Vector3 offsetPos = targetPos + rot * Vector3.forward * ghostOffset;
+
+        ghost.transform.position = Vector3.Lerp(
+            ghost.transform.position,
+            offsetPos,
+            Time.deltaTime * ghostFollowSpeed);
+
+        ghost.transform.rotation = Quaternion.Slerp(
+            ghost.transform.rotation,
+            rot,
+            Time.deltaTime * ghostFollowSpeed);
 
         ghostValid = true;
     }
 
-    void TryPlaceBlock()
+    // =========================
+    // REQUEST PLACE
+    // =========================
+    void RequestPlaceBlock()
     {
-        if (!ghostValid) return;
+        PlaceBlockServerRpc(
+            ghost.transform.position,
+            ghost.transform.rotation,
+            ghost.transform.localScale
+        );
 
-        GameObject newBlock = Instantiate(blockPrefab, ghost.transform.position, ghost.transform.rotation);
-
-        ScoreDisplayVR display = FindObjectOfType<ScoreDisplayVR>();
-        if (display != null)
-        {
-            display.AddScore(10);
-        }
-        // Add Rigidbody if missing
-        if (newBlock.GetComponent<Rigidbody>() == null)
-            newBlock.AddComponent<Rigidbody>();
-
-        // Ensure collider exists
-        if (newBlock.GetComponent<Collider>() == null)
-            newBlock.AddComponent<BoxCollider>();
-
-        // Apply ghost scale
-        newBlock.transform.localScale = ghost.transform.localScale;
+        ScoreDisplayVR score = GetComponent<ScoreDisplayVR>();
+        if (score != null)
+            score.AddScore(10);
     }
 
+    // =========================
+    // KEYBOARD TEST SPAWN
+    // =========================
+    void SpawnFromKeyboard()
+    {
+        if (playerCamera == null)
+            return;
+
+        Vector3 pos = playerCamera.transform.position +
+                      playerCamera.transform.forward * keyboardSpawnDistance;
+
+        Quaternion rot = Quaternion.LookRotation(playerCamera.transform.forward);
+
+        PlaceBlockServerRpc(pos, rot, Vector3.one);
+    }
+
+    // =========================
+    // SERVER RPC
+    // =========================
+    [ServerRpc]
+    void PlaceBlockServerRpc(Vector3 pos, Quaternion rot, Vector3 scale)
+    {
+        GameObject block = Instantiate(blockPrefab, pos, rot);
+        block.transform.localScale = scale;
+
+        NetworkObject netObj = block.GetComponent<NetworkObject>();
+        if (netObj != null)
+            netObj.Spawn();
+    }
+
+    // =========================
+    // UTILS
+    // =========================
     bool TryGetJointPose(XRHand hand, XRHandJointID jointID, out Pose pose)
     {
-        XRHandJoint joint = hand.GetJoint(jointID);
-        return joint.TryGetPose(out pose);
+        return hand.GetJoint(jointID).TryGetPose(out pose);
     }
 }
